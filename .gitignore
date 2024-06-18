@@ -1,4 +1,5 @@
 .*/
+release/
 
 *.iml
 .kotlin
