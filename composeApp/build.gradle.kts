@@ -28,6 +28,12 @@ kotlin {
         }
         binaries.executable()
     }
+
+    js(IR) {
+        browser {}
+        nodejs {}
+        binaries.executable()
+    }
     
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
