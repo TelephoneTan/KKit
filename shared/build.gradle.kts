@@ -6,6 +6,8 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.zipline)
+    alias(libs.plugins.buildConfig)
 }
 
 kotlin {
@@ -41,10 +43,37 @@ kotlin {
     iosSimulatorArm64()
     
     jvm()
+
+    applyDefaultHierarchyTemplate()
     
     sourceSets {
-        commonMain.dependencies {
-            // put your Multiplatform dependencies here
+        commonMain.get().apply {
+            dependencies {
+                // put your Multiplatform dependencies here
+            }
+            buildConfig {
+                useKotlinOutput { internalVisibility = false }
+                val ziplineJSVersion: Int by rootProject.extra
+                buildConfigField<Int>("ZIPLINE_JS_VERSION", ziplineJSVersion)
+                val ziplineJSPort: Int by rootProject.extra
+                buildConfigField<Int>("ZIPLINE_JS_PORT", ziplineJSPort)
+            }
+        }
+        val ziplineMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                api(libs.zipline)
+            }
+        }
+        jvmMain.get().apply {
+            dependsOn(ziplineMain)
+            dependencies {
+                implementation(libs.zipline.loader)
+                implementation(libs.okhttp3)
+            }
+        }
+        jsMain.get().apply {
+            dependsOn(ziplineMain)
         }
     }
 }

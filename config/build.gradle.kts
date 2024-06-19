@@ -1,0 +1,1 @@
+rootProject.extra["ziplineJSVersion"] = 2

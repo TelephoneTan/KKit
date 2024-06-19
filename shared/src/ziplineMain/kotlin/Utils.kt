@@ -1,0 +1,1 @@
+internal fun isZiplineJSFresh(cachedVersion: String?) = false

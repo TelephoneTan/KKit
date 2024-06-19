@@ -15,6 +15,10 @@ junit = "4.13.2"
 kotlin = "2.0.0"
 ktor = "2.3.11"
 logback = "1.5.6"
+zipline = "1.12.0"
+okhttp3 = "4.12.0"
+kotlinx-serialization = "1.7.0"
+buildConfig = "5.3.5"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -31,6 +35,10 @@ logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+zipline = { module = "app.cash.zipline:zipline", version.ref = "zipline" }
+zipline-loader = { module = "app.cash.zipline:zipline-loader", version.ref = "zipline" }
+okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp3" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -40,3 +48,6 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+zipline = { id = "app.cash.zipline", version.ref = "zipline" }
+kotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
