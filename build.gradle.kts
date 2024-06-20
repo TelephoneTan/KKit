@@ -10,4 +10,5 @@ plugins {
     alias(libs.plugins.zipline) apply false
     alias(libs.plugins.kotlinPluginSerialization) apply false
     alias(libs.plugins.buildConfig) apply false
+    alias(libs.plugins.swiftKlib) apply false
 }

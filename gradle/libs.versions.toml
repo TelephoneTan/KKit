@@ -19,6 +19,7 @@ zipline = "1.12.0"
 okhttp3 = "4.12.0"
 kotlinx-serialization = "1.7.0"
 buildConfig = "5.3.5"
+swiftKlib = "0.5.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -51,3 +52,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 zipline = { id = "app.cash.zipline", version.ref = "zipline" }
 kotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
+swiftKlib = { id = "io.github.ttypic.swiftklib", version.ref = "swiftKlib" }

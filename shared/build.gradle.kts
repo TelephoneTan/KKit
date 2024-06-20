@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.swiftKlib)
 }
 
 kotlin {
@@ -36,10 +37,20 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.compilations {
+            val main by getting {
+                cinterops {
+                    create("ios")
+                }
+            }
+        }
+    }
     
     jvm()
 
@@ -70,5 +81,12 @@ android {
     }
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+    }
+}
+
+swiftklib {
+    create("ios") {
+        path = file("../ios/Sources/ios")
+        packageName("")
     }
 }
