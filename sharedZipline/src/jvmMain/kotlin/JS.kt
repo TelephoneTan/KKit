@@ -14,7 +14,7 @@ private val ziplineLoader = ZiplineLoader(
     OkHttpClient()
 )
 
-actual suspend fun js(): JS = when (val result = ziplineLoader.loadOnce(
+suspend fun jsi(): JS = when (val result = ziplineLoader.loadOnce(
     JSZipline.NAME,
     object : FreshnessChecker {
         override fun isFresh(manifest: ZiplineManifest, freshAtEpochMs: Long): Boolean {

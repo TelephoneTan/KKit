@@ -1,0 +1,1 @@
+actual suspend fun js(): JS = jsi()

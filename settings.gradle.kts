@@ -32,7 +32,9 @@ include(":configLocal")
 //
 include(":config")
 //
+include(":shared")
+include(":sharedZipline")
+//
 include(":composeApp")
 include(":server")
-include(":shared")
 include(":ziplineJS")

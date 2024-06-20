@@ -1,1 +1,1 @@
-actual suspend fun js(): JS = throw Throwable()
+suspend fun jsi(): JS = throw Throwable()

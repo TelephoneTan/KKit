@@ -5,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 fun main() = runBlocking {
     js().run {
         hello()
-        val latestZ = latestZiplineVersion()
+        val latestZ = fetchLatestZiplineVersion()
         application {
             Window(
                 onCloseRequest = ::exitApplication,

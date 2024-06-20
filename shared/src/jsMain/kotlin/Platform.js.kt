@@ -1,7 +1,5 @@
 import kotlinx.browser.window
 
-external val globalThis: dynamic
-
 class JSPlatform : Platform {
     override val name: String =
         "JS in ${

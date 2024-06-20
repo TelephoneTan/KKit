@@ -56,23 +56,28 @@ kotlin {
     }
     
     sourceSets {
-        val desktopMain by getting
-        
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-        }
         commonMain.dependencies {
+            implementation(projects.shared)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(projects.shared)
         }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
+        androidMain.dependencies {
+            implementation(projects.sharedZipline)
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+        }
+        val desktopMain by getting {
+            dependencies {
+                implementation(projects.sharedZipline)
+                implementation(compose.desktop.currentOs)
+            }
+        }
+        iosMain.dependencies {
+            implementation(projects.sharedZipline)
         }
     }
 }

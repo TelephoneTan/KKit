@@ -1,1 +1,0 @@
-actual suspend fun js(): JS = throw Throwable()
