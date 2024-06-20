@@ -20,10 +20,14 @@ okhttp3 = "4.12.0"
 kotlinx-serialization = "1.7.0"
 buildConfig = "5.3.5"
 swiftKlib = "0.5.1"
+mongoDB = "5.1.0"
+exposed = "0.41.+"
+mariaDBDriver = "3.4.0"
+kotlinxDatetime = "0.6.0"
+cryptographyCore = "0.3.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
@@ -32,10 +36,35 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
-ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
-ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+ktor-server-core-jvm = { group = "io.ktor", name = "ktor-server-core-jvm" }
+ktor-serialization-kotlinx-json-jvm = { group = "io.ktor", name = "ktor-serialization-kotlinx-json-jvm" }
+ktor-server-content-negotiation-jvm = { group = "io.ktor", name = "ktor-server-content-negotiation-jvm" }
+ktor-server-websockets-jvm = { group = "io.ktor", name = "ktor-server-websockets-jvm" }
+ktor-server-swagger-jvm = { group = "io.ktor", name = "ktor-server-swagger-jvm" }
+ktor-server-partial-content-jvm = { group = "io.ktor", name = "ktor-server-partial-content-jvm" }
+ktor-server-openapi = { group = "io.ktor", name = "ktor-server-openapi" }
+ktor-server-default-headers-jvm = { group = "io.ktor", name = "ktor-server-default-headers-jvm" }
+ktor-server-cors-jvm = { group = "io.ktor", name = "ktor-server-cors-jvm" }
+ktor-server-conditional-headers-jvm = { group = "io.ktor", name = "ktor-server-conditional-headers-jvm" }
+ktor-server-compression-jvm = { group = "io.ktor", name = "ktor-server-compression-jvm" }
+ktor-server-caching-headers-jvm = { group = "io.ktor", name = "ktor-server-caching-headers-jvm" }
+ktor-server-host-common-jvm = { group = "io.ktor", name = "ktor-server-host-common-jvm" }
+ktor-server-status-pages-jvm = { group = "io.ktor", name = "ktor-server-status-pages-jvm" }
+ktor-server-resources = { group = "io.ktor", name = "ktor-server-resources" }
+ktor-server-auto-head-response-jvm = { group = "io.ktor", name = "ktor-server-auto-head-response-jvm" }
+ktor-server-netty-jvm = { group = "io.ktor", name = "ktor-server-netty-jvm" }
+ktor-server-tests-jvm = { group = "io.ktor", name = "ktor-server-tests-jvm" }
+mongodb-driver-kotlin-coroutine = { group = "org.mongodb", name = "mongodb-driver-kotlin-coroutine", version.ref = "mongoDB" }
+bson-kotlinx = { group = "org.mongodb", name = "bson-kotlinx", version.ref = "mongoDB" }
+bson = { group = "org.mongodb", name = "bson", version.ref = "mongoDB" }
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposed" }
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposed" }
+mariadb-java-client = { group = "org.mariadb.jdbc", name = "mariadb-java-client", version.ref = "mariaDBDriver" }
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
+cryptography-core = { group = "dev.whyoleg.cryptography", name = "cryptography-core", version.ref = "cryptographyCore" }
+cryptography-provider-jdk = { group = "dev.whyoleg.cryptography", name = "cryptography-provider-jdk", version.ref = "cryptographyCore" }
 zipline = { module = "app.cash.zipline:zipline", version.ref = "zipline" }
 zipline-loader = { module = "app.cash.zipline:zipline-loader", version.ref = "zipline" }
 okhttp3 = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp3" }

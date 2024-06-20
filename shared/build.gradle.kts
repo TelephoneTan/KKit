@@ -59,7 +59,8 @@ kotlin {
     sourceSets {
         commonMain.get().apply {
             dependencies {
-                // put your Multiplatform dependencies here
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.cryptography.core)
             }
             buildConfig {
                 useKotlinOutput { internalVisibility = false }
@@ -67,6 +68,16 @@ kotlin {
                 buildConfigField<Int>("ZIPLINE_JS_VERSION", ziplineJSVersion)
                 val ziplineJSPort: Int by rootProject.extra
                 buildConfigField<Int>("ZIPLINE_JS_PORT", ziplineJSPort)
+            }
+        }
+        jvmMain.get().apply {
+            dependencies {
+                implementation(libs.cryptography.provider.jdk)
+            }
+        }
+        jvmTest.get().apply {
+            dependencies {
+                implementation(libs.kotlin.test.junit)
             }
         }
     }
