@@ -1,4 +1,5 @@
 import JSZipline.Companion.jsZipline
+import KKit.shared.BuildConfig
 import app.cash.zipline.ZiplineManifest
 import app.cash.zipline.loader.FreshnessChecker
 import app.cash.zipline.loader.LoadResult
@@ -21,7 +22,7 @@ suspend fun jsi(): JS = when (val result = ziplineLoader.loadOnce(
             return isZiplineJSFresh(manifest.version)
         }
     },
-    "${HTTPBases.SERVER}${URLSuffixes.ZIPLINE_JS}"
+    "${HTTPBases.SERVER}${URLSuffixes.ziplineJS(BuildConfig.ZIPLINE_JS_VERSION)}"
 )) {
     is LoadResult.Success -> result.zipline
     is LoadResult.Failure -> throw result.exception

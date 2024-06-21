@@ -1,0 +1,1 @@
+fun String?.nonEmptyOrNull() = this?.takeIf { it.isNotEmpty() }

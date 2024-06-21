@@ -64,10 +64,24 @@ kotlin {
             }
             buildConfig {
                 useKotlinOutput { internalVisibility = false }
+                //
+                val serverPort: Int by rootProject.extra
+                buildConfigField<Int>("SERVER_PORT", serverPort)
+                //
+                val serverHTTPBase: String by rootProject.extra
+                buildConfigField<String>("SERVER_HTTP_BASE", serverHTTPBase)
+                //
                 val ziplineJSVersion: Int by rootProject.extra
                 buildConfigField<Int>("ZIPLINE_JS_VERSION", ziplineJSVersion)
+                //
                 val ziplineJSPort: Int by rootProject.extra
                 buildConfigField<Int>("ZIPLINE_JS_PORT", ziplineJSPort)
+                //
+                val cdnOrigin: String by rootProject.extra
+                buildConfigField<String>("CDN_ORIGIN", cdnOrigin)
+                //
+                val cdnHost: Array<String> by rootProject.extra
+                buildConfigField<Array<String>>("CDN_HOST", cdnHost)
             }
         }
         jvmMain.get().apply {

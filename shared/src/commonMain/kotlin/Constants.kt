@@ -1,7 +1,5 @@
 import KKit.shared.BuildConfig
 
-const val SERVER_PORT = 8080
-
 object HTTPSchemes {
     const val SERVER = "http"
 }
@@ -11,13 +9,18 @@ object Hosts {
 }
 
 object Ports {
-    const val SERVER = BuildConfig.ZIPLINE_JS_PORT
+    const val SERVER = BuildConfig.SERVER_PORT
 }
 
 object HTTPBases {
-    const val SERVER = "${HTTPSchemes.SERVER}://${Hosts.SERVER}:${Ports.SERVER}"
+    const val SERVER = BuildConfig.SERVER_HTTP_BASE
+}
+
+object Paths {
+    const val ZIPLINE_JS = "zipline-js"
+    const val FILE = "file"
 }
 
 object URLSuffixes {
-    const val ZIPLINE_JS = "/manifest.zipline.json"
+    fun ziplineJS(version: Int) = "/${Paths.ZIPLINE_JS}/$version/manifest.zipline.json"
 }
