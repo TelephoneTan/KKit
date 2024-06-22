@@ -1,1 +1,0 @@
-suspend fun jsi(): JS = throw Throwable()

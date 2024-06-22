@@ -44,18 +44,26 @@ kotlin {
         jsMain.get().apply {
             dependsOn(ziplineMain)
         }
-        androidMain.get().apply {
-            dependsOn(ziplineMain)
-        }
-        iosMain.get().apply {
-            dependsOn(ziplineMain)
-        }
-        jvmMain.get().apply {
+        val ziplineHostMain by creating {
             dependsOn(ziplineMain)
             dependencies {
                 implementation(libs.zipline.loader)
+            }
+        }
+        val ziplineJavaHostMain by creating {
+            dependsOn(ziplineHostMain)
+            dependencies {
                 implementation(libs.okhttp3)
             }
+        }
+        androidMain.get().apply {
+            dependsOn(ziplineJavaHostMain)
+        }
+        iosMain.get().apply {
+            dependsOn(ziplineHostMain)
+        }
+        jvmMain.get().apply {
+            dependsOn(ziplineJavaHostMain)
         }
     }
 }
