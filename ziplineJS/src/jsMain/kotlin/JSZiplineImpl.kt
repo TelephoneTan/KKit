@@ -6,7 +6,7 @@ class JSZiplineImpl : JSZipline {
     }
 
     override fun world(): String {
-        return "Zipline"
+        return "Powered by ZiplineJS Canary ${BuildConfig.ZIPLINE_JS_VERSION} ${getPlatform().name}"
     }
 
     override fun version(): Int {

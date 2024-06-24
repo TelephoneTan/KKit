@@ -6,7 +6,7 @@ class JSPlatform : Platform {
             when {
                 isNodeJS -> globalThis.JSON.stringify(globalThis.process.versions, null, "  ")
                 isBrowser -> window.navigator.userAgent
-                else -> throw Throwable()
+                else -> "Unknown JS Runtime"
             }
         }"
 }
