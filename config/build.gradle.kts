@@ -1,1 +1,1 @@
-rootProject.extra["ziplineJSVersion"] = 3
+rootProject.extra["ziplineJSVersion"] = 15

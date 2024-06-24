@@ -50,20 +50,20 @@ kotlin {
                 implementation(libs.zipline.loader)
             }
         }
-        val ziplineJavaHostMain by creating {
+        androidMain.get().apply {
             dependsOn(ziplineHostMain)
             dependencies {
                 implementation(libs.okhttp3)
             }
         }
-        androidMain.get().apply {
-            dependsOn(ziplineJavaHostMain)
-        }
         iosMain.get().apply {
             dependsOn(ziplineHostMain)
         }
         jvmMain.get().apply {
-            dependsOn(ziplineJavaHostMain)
+            dependsOn(ziplineHostMain)
+            dependencies {
+                implementation(libs.okhttp3)
+            }
         }
     }
 }

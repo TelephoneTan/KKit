@@ -74,6 +74,7 @@ kotlin {
             dependencies {
                 implementation(projects.sharedZipline)
                 implementation(compose.desktop.currentOs)
+                runtimeOnly(libs.kotlinx.coroutines.swing)
             }
         }
         iosMain.dependencies {

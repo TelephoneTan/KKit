@@ -23,4 +23,5 @@ object Paths {
 
 object URLSuffixes {
     fun ziplineJS(version: Int) = "/${Paths.ZIPLINE_JS}/$version/manifest.zipline.json"
+    const val ZIPLINE_JS_VERSION_LATEST = "/${Paths.ZIPLINE_JS}/version/latest"
 }

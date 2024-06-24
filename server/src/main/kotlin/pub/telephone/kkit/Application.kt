@@ -5,6 +5,7 @@ import Hosts
 import KKit.shared.BuildConfig
 import Paths
 import Ports
+import URLSuffixes
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -17,6 +18,7 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.request.host
 import io.ktor.server.request.port
 import io.ktor.server.request.uri
+import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
@@ -64,6 +66,9 @@ fun Application.module() {
         }
         get("/") {
             call.respondText("Ktor: ${Greeting().greet()}")
+        }
+        get(URLSuffixes.ZIPLINE_JS_VERSION_LATEST) {
+            call.respond(BuildConfig.ZIPLINE_JS_VERSION.toString())
         }
     }
 }

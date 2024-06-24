@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.swiftKlib)
+    alias(libs.plugins.kotlinPluginSerialization)
 }
 
 kotlin {
@@ -61,6 +62,8 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.cryptography.core)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.coroutines.core)
             }
             buildConfig {
                 useKotlinOutput { internalVisibility = false }
@@ -84,14 +87,34 @@ kotlin {
                 buildConfigField<Array<String>>("CDN_HOST", cdnHost)
             }
         }
+        androidMain.get().apply {
+            dependencies {
+                api(libs.ktor.client.core)
+                api(libs.ktor.client.cio)
+            }
+        }
         jvmMain.get().apply {
             dependencies {
                 implementation(libs.cryptography.provider.jdk)
+                api(libs.ktor.client.core)
+                api(libs.ktor.client.cio)
             }
         }
         jvmTest.get().apply {
             dependencies {
                 implementation(libs.kotlin.test.junit)
+            }
+        }
+        iosMain.get().apply {
+            dependencies {
+                api(libs.ktor.client.core)
+                api(libs.ktor.client.cio)
+            }
+        }
+        jsMain.get().apply {
+            dependencies {
+                api(libs.ktor.client.core)
+                api(libs.ktor.client.js)
             }
         }
     }
