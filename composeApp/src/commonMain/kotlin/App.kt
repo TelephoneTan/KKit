@@ -5,14 +5,33 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import kkit.composeapp.generated.resources.Res
+import kkit.composeapp.generated.resources.compose_multiplatform
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-import kkit.composeapp.generated.resources.Res
-import kkit.composeapp.generated.resources.compose_multiplatform
+@Composable
+fun <T> LaunchedJS(initialValue: T, withJS: suspend JS.() -> T): T {
+    var state: T by remember { mutableStateOf(initialValue) }
+    LaunchedEffect(true) {
+        js().withJS().let {
+            withContext(Dispatchers.Main) {
+                state = it
+            }
+        }
+    }
+    return state
+}
 
 @Composable
 @Preview
@@ -25,7 +44,13 @@ fun App() {
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(LaunchedJS("default title") {
+                        "${world()}[v](${ms(Money.Dollar)})"
+                    })
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
                     Text("Compose: $greeting")
                 }

@@ -1,1 +1,1 @@
-actual suspend fun js(): JS = jsi()
+actual suspend fun js(): JS = jsLocal()

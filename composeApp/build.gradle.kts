@@ -66,19 +66,19 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
         }
         androidMain.dependencies {
-            implementation(projects.sharedZipline)
+            implementation(projects.sharedJSCore)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
         val desktopMain by getting {
             dependencies {
-                implementation(projects.sharedZipline)
+                implementation(projects.sharedJSCore)
                 implementation(compose.desktop.currentOs)
                 runtimeOnly(libs.kotlinx.coroutines.swing)
             }
         }
         iosMain.dependencies {
-            implementation(projects.sharedZipline)
+            implementation(projects.sharedJSCore)
         }
     }
 }

@@ -56,7 +56,7 @@ fun Application.module() {
     routing {
         listOf(
             Paths.FILE,
-            Paths.ZIPLINE_JS,
+            Paths.JS_CORE,
         ).forEach {
             staticFiles("/$it", File("./$it")) {
                 modify { _, call ->
@@ -67,8 +67,8 @@ fun Application.module() {
         get("/") {
             call.respondText("Ktor: ${Greeting().greet()}")
         }
-        get(URLSuffixes.ZIPLINE_JS_VERSION_LATEST) {
-            call.respond(BuildConfig.ZIPLINE_JS_VERSION.toString())
+        get(URLSuffixes.JS_CORE_VERSION_LATEST) {
+            call.respond(BuildConfig.JS_CORE_VERSION.toString())
         }
     }
 }

@@ -62,11 +62,14 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.cryptography.core)
-                implementation(libs.kotlinx.serialization.json)
-                implementation(libs.kotlinx.coroutines.core)
+                api(libs.kotlinx.serialization.json)
+                api(libs.kotlinx.coroutines.core)
             }
             buildConfig {
                 useKotlinOutput { internalVisibility = false }
+                //
+                val serverHost: String by rootProject.extra
+                buildConfigField<String>("SERVER_HOST", serverHost)
                 //
                 val serverPort: Int by rootProject.extra
                 buildConfigField<Int>("SERVER_PORT", serverPort)
@@ -74,11 +77,14 @@ kotlin {
                 val serverHTTPBase: String by rootProject.extra
                 buildConfigField<String>("SERVER_HTTP_BASE", serverHTTPBase)
                 //
-                val ziplineJSVersion: Int by rootProject.extra
-                buildConfigField<Int>("ZIPLINE_JS_VERSION", ziplineJSVersion)
+                val jsCoreVersion: Int by rootProject.extra
+                buildConfigField<Int>("JS_CORE_VERSION", jsCoreVersion)
                 //
-                val ziplineJSPort: Int by rootProject.extra
-                buildConfigField<Int>("ZIPLINE_JS_PORT", ziplineJSPort)
+                val jsCoreServerDir: String by rootProject.extra
+                buildConfigField<String>("JS_CORE_SERVER_DIR", jsCoreServerDir)
+                //
+                val jsCoreFileName: String by rootProject.extra
+                buildConfigField<String>("JS_CORE_FILE_NAME", jsCoreFileName)
                 //
                 val cdnOrigin: String by rootProject.extra
                 buildConfigField<String>("CDN_ORIGIN", cdnOrigin)
