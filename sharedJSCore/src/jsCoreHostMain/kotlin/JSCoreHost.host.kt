@@ -35,6 +35,7 @@ private suspend fun loadQuickJS(
         withContext(singleThreadDispatcher) {
             QuickJs.create(singleThreadDispatcher).apply {
                 try {
+                    maxStackSize = 512 * 1024
                     addTypeConverters(object : TypeConverter<Long, Int> {
                         override val sourceType: KType
                             get() = typeOf<Long>()
