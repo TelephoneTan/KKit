@@ -105,6 +105,7 @@ class Promise<RESULT> private constructor(
 
     @Volatile
     private var status = Status.RUNNING
+    val state get() = status
     private val settled = Channel<Any>()
     private val submit = Channel<Any?>(1)
     private val setTimeoutMutex = Mutex()

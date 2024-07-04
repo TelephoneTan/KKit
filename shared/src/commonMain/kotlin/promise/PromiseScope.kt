@@ -2,6 +2,7 @@ package promise
 
 interface PromiseScope {
     val scopeCancelledBroadcast: PromiseCancelledBroadcast?
+    val promiseScope get() = this
     fun <RESULT> promise(
         config: PromiseConfig? = null,
         job: PromiseJob<RESULT>,
