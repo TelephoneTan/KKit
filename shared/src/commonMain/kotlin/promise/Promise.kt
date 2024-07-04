@@ -629,6 +629,7 @@ private fun <RESULT> processInNewJob(parentJob: Job? = null, builder: ProcessFun
 fun <RESULT> process(builder: ProcessFunc<RESULT>) = processInNewJob(builder = builder)
 fun work(builder: WorkFunc) = process(builder.toProcessFunc())
 fun <RESULT> promise(job: PromiseJob<RESULT>) = process { promise { job() } }
+fun trigger(job: PromiseJob<Any?>) = promise(job)
 
 //
 fun <RESULT> PromiseScope.process(builder: ProcessFunc<RESULT>) =
@@ -656,3 +657,6 @@ fun <RESULT> CoroutineScope.process(builder: ProcessFunc<RESULT>) = processInNew
 
 fun CoroutineScope.work(builder: WorkFunc) = process(builder.toProcessFunc())
 fun <RESULT> CoroutineScope.promise(job: PromiseJob<RESULT>) = process { promise { job() } }
+
+@Suppress("unused")
+fun CoroutineScope.trigger(job: PromiseJob<Any?>) = promise(job)

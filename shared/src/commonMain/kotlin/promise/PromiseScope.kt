@@ -11,6 +11,15 @@ interface PromiseScope {
         ), job
     )
 
+    fun trigger(
+        config: PromiseConfig? = null,
+        job: PromiseJob<Any?>,
+    ) = Promise(
+        (config ?: PromiseConfig.EMPTY_CONFIG).copy(
+            scopeCancelledBroadcast = scopeCancelledBroadcast
+        ), job
+    )
+
     fun <RESULT, NEXT_RESULT> Promise<RESULT>.then(
         config: PromiseConfig? = null,
         onSucceeded: SucceededHandler<RESULT, NEXT_RESULT>
