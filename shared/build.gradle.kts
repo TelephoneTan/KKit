@@ -93,6 +93,11 @@ kotlin {
                 buildConfigField<Array<String>>("CDN_HOST", cdnHost)
             }
         }
+        commonTest.get().apply {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
         androidMain.get().apply {
             dependencies {
                 api(libs.ktor.client.core)
