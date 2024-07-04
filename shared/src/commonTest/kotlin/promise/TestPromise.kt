@@ -5,41 +5,13 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withTimeout
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
-import synchronizedAsync
+import log
+import logBlock
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
-internal expect fun <RESULT> Task<RESULT>.testAwait(): RESULT
-
-private val time get() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-
-private val logMutex = Mutex()
-
-private fun log(msg: Any?) {
-    logMutex.synchronizedAsync {
-        println("【${time}】$msg")
-    }
-}
-
-private const val blockStart = "<<<<<<<<<<<<<"
-private const val blockEnd = ">>>>>>>>>>>>>"
-
-private fun logStart(msg: Any?) = println("【${time}】$msg $blockStart")
-private fun logEnd(msg: Any?) = println("【${time}】$blockEnd $msg")
-private fun logBlock(msg: Any?, block: () -> Unit) {
-    logMutex.synchronizedAsync {
-        logStart(msg)
-        block()
-        logEnd(msg)
-    }
-}
-
-class Test {
+class TestPromise {
     @Test
     fun test() {
         try {
