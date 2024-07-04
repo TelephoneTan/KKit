@@ -349,8 +349,8 @@ class Promise<RESULT> private constructor(
     }
 
     fun <NEXT_RESULT> then(
+        onSucceeded: SucceededHandler<RESULT, NEXT_RESULT>,
         config: PromiseConfig?,
-        onSucceeded: SucceededHandler<RESULT, NEXT_RESULT>
     ) =
         Promise(
             (config ?: PromiseConfig.EMPTY_CONFIG).copy(
@@ -366,16 +366,16 @@ class Promise<RESULT> private constructor(
         }
 
     fun next(
+        onSucceeded: SucceededConsumer<RESULT>,
         config: PromiseConfig?,
-        onSucceeded: SucceededConsumer<RESULT>
-    ) = then(config) {
+    ) = then({
         onSucceeded()
         rsv(null)
-    }
+    }, config)
 
     fun <NEXT_RESULT> catch(
+        onFailed: FailedHandler<NEXT_RESULT>,
         config: PromiseConfig?,
-        onFailed: FailedHandler<NEXT_RESULT>
     ) =
         Promise(
             (config ?: PromiseConfig.EMPTY_CONFIG).copy(
@@ -391,16 +391,16 @@ class Promise<RESULT> private constructor(
         }
 
     fun recover(
+        onFailed: FailedConsumer,
         config: PromiseConfig?,
-        onFailed: FailedConsumer
-    ) = catch(config) {
+    ) = catch({
         onFailed()
         rsv(null)
-    }
+    }, config)
 
     fun <NEXT_RESULT> forCancel(
+        onCancelled: CancelledListener,
         config: PromiseConfig?,
-        onCancelled: CancelledListener
     ) =
         Promise<NEXT_RESULT>(
             (config ?: PromiseConfig.EMPTY_CONFIG).copy(
@@ -416,18 +416,18 @@ class Promise<RESULT> private constructor(
         }
 
     fun aborted(
+        onCancelled: CancelledListener,
         config: PromiseConfig?,
-        onCancelled: CancelledListener
-    ) = forCancel<RESULT>(config, onCancelled)
+    ) = forCancel<RESULT>(onCancelled, config)
 
     fun terminated(
+        onCancelled: CancelledListener,
         config: PromiseConfig?,
-        onCancelled: CancelledListener
-    ) = forCancel<Any?>(config, onCancelled)
+    ) = forCancel<Any?>(onCancelled, config)
 
     fun finally(
+        onFinally: FinallyHandler<RESULT>,
         config: PromiseConfig?,
-        onFinally: FinallyHandler<RESULT>
     ) =
         Promise<RESULT>(
             (config ?: PromiseConfig.EMPTY_CONFIG).copy(
@@ -443,12 +443,12 @@ class Promise<RESULT> private constructor(
         }
 
     fun last(
+        onFinally: FinallyConsumer<RESULT>,
         config: PromiseConfig?,
-        onFinally: FinallyConsumer<RESULT>
-    ) = finally(config) {
+    ) = finally({
         onFinally()
         forward()
-    }
+    }, config)
 
     @Suppress("unused")
     fun setTimeoutAsync(
@@ -511,7 +511,7 @@ class Promise<RESULT> private constructor(
     }
 
     companion object {
-        fun <RESULT> race(
+        fun <RESULT> raceN(
             config: PromiseConfig?,
             vararg promises: Promise<RESULT>
         ): Promise<RESULT> {
