@@ -15,7 +15,7 @@ data class TaskOnceReq<RESULT>(
 class TaskOnce<RESULT>(
     scope: PromiseScope,
     @Suppress("MemberVisibilityCanBePrivate")
-    val job: TaskOnceJob<RESULT>? = null
+    val job: TaskOnceJob<RESULT>?
 ) {
     private val reqChan = Channel<TaskOnceReq<RESULT>>()
 
@@ -37,7 +37,7 @@ class TaskOnce<RESULT>(
         }
     }
 
-    fun perform(scope: PromiseScope, job: TaskOnceJob<RESULT>? = null): Promise<RESULT> {
+    fun perform(scope: PromiseScope, job: TaskOnceJob<RESULT>?): Promise<RESULT> {
         return scope.promise {
             rsp(TaskOnceReq(job = job).let {
                 reqChan.send(it)

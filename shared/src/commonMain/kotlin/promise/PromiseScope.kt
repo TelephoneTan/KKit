@@ -1,8 +1,20 @@
 package promise
 
+import promise.task.TaskOnce
+import promise.task.TaskOnceJob
+
 interface PromiseScope {
     val scopeCancelledBroadcast: PromiseCancelledBroadcast?
     val promiseScope get() = this
+
+    fun <RESULT> taskOnce(
+        job: TaskOnceJob<RESULT>? = null
+    ) = TaskOnce(promiseScope, job)
+
+    fun <RESULT> TaskOnce<RESULT>.perform(
+        job: TaskOnceJob<RESULT>? = null
+    ) = perform(promiseScope, job)
+
     fun <RESULT> promise(
         config: PromiseConfig? = null,
         job: PromiseJob<RESULT>,
