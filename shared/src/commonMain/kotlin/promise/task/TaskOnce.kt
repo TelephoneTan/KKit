@@ -23,7 +23,7 @@ class TaskOnce<RESULT>(
         scope.trigger {
             var current: Promise<RESULT>? = null
             for (req in reqChan) {
-                while (current == null) {
+                while (current == null && isActive) {
                     (req.job ?: job)!!.invoke(promiseScope).also { tp ->
                         tp.awaitSettled()
                         tp.state.takeIf { it == Status.SUCCEED }?.let {
@@ -31,7 +31,7 @@ class TaskOnce<RESULT>(
                         }
                     }
                 }
-                req.result.trySend(current!!)
+                current?.also { req.result.trySend(it) }
             }
             waiting()
         }
