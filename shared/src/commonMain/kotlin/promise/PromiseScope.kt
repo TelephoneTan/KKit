@@ -2,6 +2,8 @@ package promise
 
 import promise.task.TaskOnce
 import promise.task.TaskOnceJob
+import promise.task.TaskShared
+import promise.task.TaskSharedJob
 
 interface PromiseScope {
     val scopeCancelledBroadcast: PromiseCancelledBroadcast?
@@ -13,6 +15,14 @@ interface PromiseScope {
 
     fun <RESULT> TaskOnce<RESULT>.perform(
         job: TaskOnceJob<RESULT>? = null
+    ) = perform(promiseScope, job)
+
+    fun <RESULT> taskShared(
+        job: TaskSharedJob<RESULT>? = null
+    ) = TaskShared(promiseScope, job)
+
+    fun <RESULT> TaskShared<RESULT>.perform(
+        job: TaskSharedJob<RESULT>? = null
     ) = perform(promiseScope, job)
 
     fun <RESULT> promise(
