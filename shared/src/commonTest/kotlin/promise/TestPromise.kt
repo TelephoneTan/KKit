@@ -6,8 +6,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import log
-import logBlock
+import log.log
+import log.logBlock
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 

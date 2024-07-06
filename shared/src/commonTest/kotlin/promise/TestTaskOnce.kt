@@ -4,8 +4,8 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import log
-import time
+import log.log
+import log.time
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds

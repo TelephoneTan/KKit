@@ -60,7 +60,7 @@ kotlin {
     sourceSets {
         commonMain.get().apply {
             dependencies {
-                implementation(libs.kotlinx.datetime)
+                api(libs.kotlinx.datetime)
                 implementation(libs.cryptography.core)
                 api(libs.kotlinx.serialization.json)
                 api(libs.kotlinx.coroutines.core)
