@@ -17,11 +17,8 @@ object HTTPBases {
 }
 
 object Paths {
-    const val JS_CORE = BuildConfig.JS_CORE_SERVER_DIR
     const val FILE = "file"
 }
 
 object URLSuffixes {
-    fun jsCore(version: Int) = "/${Paths.JS_CORE}/$version/${BuildConfig.JS_CORE_FILE_NAME}"
-    const val JS_CORE_VERSION_LATEST = "/${Paths.JS_CORE}/version/latest"
 }

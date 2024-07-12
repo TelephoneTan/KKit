@@ -13,25 +13,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import kkit.composeapp.generated.resources.Res
 import kkit.composeapp.generated.resources.compose_multiplatform
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-@Composable
-fun <T> LaunchedJS(initialValue: T, withJS: suspend JS.() -> T): T {
-    var state: T by remember { mutableStateOf(initialValue) }
-    LaunchedEffect(true) {
-        js().withJS().let {
-            withContext(Dispatchers.Main) {
-                state = it
-            }
-        }
-    }
-    return state
-}
+import kotlin.coroutines.coroutineContext
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 @Preview
@@ -48,9 +40,6 @@ fun App() {
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(LaunchedJS("default title") {
-                        "${world()}[v](${ms(Money.Dollar)})"
-                    })
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
                     Text("Compose: $greeting")
                 }

@@ -14,13 +14,6 @@ fun main() = runBlocking {
             title = "hello",
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    "below title ${
-                        LaunchedJS("default") {
-                            "${world()}[v](${ms(Money.RMB)})"
-                        }
-                    }"
-                )
                 Box(Modifier.weight(1f)) {
                     App()
                 }

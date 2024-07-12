@@ -33,8 +33,6 @@ include(":configLocal")
 include(":config")
 //
 include(":shared")
-include(":sharedJSCore")
 //
 include(":composeApp")
 include(":server")
-include(":jsCore")

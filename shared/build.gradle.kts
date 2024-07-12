@@ -77,15 +77,6 @@ kotlin {
                 val serverHTTPBase: String by rootProject.extra
                 buildConfigField<String>("SERVER_HTTP_BASE", serverHTTPBase)
                 //
-                val jsCoreVersion: Int by rootProject.extra
-                buildConfigField<Int>("JS_CORE_VERSION", jsCoreVersion)
-                //
-                val jsCoreServerDir: String by rootProject.extra
-                buildConfigField<String>("JS_CORE_SERVER_DIR", jsCoreServerDir)
-                //
-                val jsCoreFileName: String by rootProject.extra
-                buildConfigField<String>("JS_CORE_FILE_NAME", jsCoreFileName)
-                //
                 val cdnOrigin: String by rootProject.extra
                 buildConfigField<String>("CDN_ORIGIN", cdnOrigin)
                 //

@@ -24,7 +24,6 @@ mariaDBDriver = "3.4.0"
 kotlinxDatetime = "0.6.0"
 cryptographyCore = "0.3.1"
 kotlinx-coroutines = "1.9.0-RC"
-quickjs-kt = "1.0.0-alpha12"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -71,7 +70,6 @@ cryptography-provider-jdk = { group = "dev.whyoleg.cryptography", name = "crypto
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
-quickjs-kt = { module = "io.github.dokar3:quickjs-kt", version.ref = "quickjs-kt" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

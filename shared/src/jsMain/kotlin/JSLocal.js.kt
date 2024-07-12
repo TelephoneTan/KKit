@@ -1,1 +1,0 @@
-suspend fun jsLocal(): JS = throw Throwable()

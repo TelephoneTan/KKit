@@ -1,1 +1,0 @@
-expect suspend fun js(): JS
