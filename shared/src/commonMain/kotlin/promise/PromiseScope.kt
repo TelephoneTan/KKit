@@ -1,5 +1,6 @@
 package promise
 
+import http.HTTPRequest
 import promise.task.TaskOnce
 import promise.task.TaskOnceJob
 import promise.task.TaskShared
@@ -145,6 +146,8 @@ interface PromiseScope {
     fun <RESULT> race(
         vararg promises: Promise<RESULT>
     ) = race(null, *promises)
+
+    fun HTTPRequest.prepare() = prepare(promiseScope)
 
     companion object : PromiseScope {
         override val scopeCancelledBroadcast: PromiseCancelledBroadcast?

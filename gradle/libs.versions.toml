@@ -24,6 +24,8 @@ mariaDBDriver = "3.4.0"
 kotlinxDatetime = "0.6.0"
 cryptographyCore = "0.3.1"
 kotlinx-coroutines = "1.9.0-RC"
+compose-webview-multiplatform = "1.9.20"
+ksoup = "0.1.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -53,8 +55,9 @@ ktor-server-resources = { group = "io.ktor", name = "ktor-server-resources" }
 ktor-server-auto-head-response-jvm = { group = "io.ktor", name = "ktor-server-auto-head-response-jvm" }
 ktor-server-netty-jvm = { group = "io.ktor", name = "ktor-server-netty-jvm" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
-ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-server-tests-jvm = { group = "io.ktor", name = "ktor-server-tests-jvm" }
 mongodb-driver-kotlin-coroutine = { group = "org.mongodb", name = "mongodb-driver-kotlin-coroutine", version.ref = "mongoDB" }
 bson-kotlinx = { group = "org.mongodb", name = "bson-kotlinx", version.ref = "mongoDB" }
@@ -70,6 +73,8 @@ cryptography-provider-jdk = { group = "dev.whyoleg.cryptography", name = "crypto
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "compose-webview-multiplatform" }
+ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

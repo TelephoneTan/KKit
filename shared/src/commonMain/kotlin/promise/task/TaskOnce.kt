@@ -24,11 +24,24 @@ class TaskOnce<RESULT>(
             var current: Promise<RESULT>? = null
             for (req in reqChan) {
                 while (current == null && isActive) {
-                    (req.job ?: job)!!.invoke(promiseScope).also { tp ->
-                        tp.awaitSettled()
-                        tp.state.takeIf { it == Status.SUCCEED }?.let {
-                            current = tp
+                    try {
+                        (req.job ?: job)!!.invoke(promiseScope).also { tp ->
+                            tp.awaitSettled()
+                            tp.state.also {
+                                if (it != Status.SUCCEED) {
+                                    try {
+                                        tp.await()
+                                    } catch (e: Throwable) {
+                                        e.printStackTrace()
+                                    }
+                                }
+                            }.takeIf { it == Status.SUCCEED }?.let {
+                                current = tp
+                            }
                         }
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                        throw e
                     }
                 }
                 current?.also { req.result.trySend(it) }

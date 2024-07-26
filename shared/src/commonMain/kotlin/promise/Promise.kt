@@ -532,6 +532,7 @@ class Promise<RESULT> private constructor(
             succeed(value)
         }
 
+        @Suppress("MemberVisibilityCanBePrivate")
         fun <RESULT> reject(reason: Throwable) = Promise<RESULT>(
             null,
             PromiseConfig.EMPTY_CONFIG
@@ -539,6 +540,7 @@ class Promise<RESULT> private constructor(
             fail(reason)
         }
 
+        @Suppress("unused")
         fun error(reason: Throwable) = reject<Any?>(reason)
 
         @Suppress("MemberVisibilityCanBePrivate")
@@ -588,6 +590,7 @@ class Task<RESULT>(
     override fun cancel() {
         cancelledBroadcaster!!.broadcast()
     }
+    suspend fun await() = promise.await()
 }
 
 typealias ProcessFunc<RESULT> = PromiseScope.() -> Promise<RESULT>
@@ -628,6 +631,8 @@ private fun <RESULT> processInNewJob(parentJob: Job? = null, builder: ProcessFun
 
 //
 fun <RESULT> process(builder: ProcessFunc<RESULT>) = processInNewJob(builder = builder)
+
+@Suppress("unused")
 fun work(builder: WorkFunc) = process(builder.toProcessFunc())
 fun <RESULT> promise(job: PromiseJob<RESULT>) = process { promise { job() } }
 fun trigger(job: PromiseJob<Any?>) = promise(job)
@@ -649,6 +654,7 @@ fun <RESULT> PromiseScope.process(builder: ProcessFunc<RESULT>) =
         }
     }
 
+@Suppress("unused")
 fun PromiseScope.work(builder: WorkFunc) = process(builder.toProcessFunc())
 
 //
@@ -656,6 +662,7 @@ fun <RESULT> CoroutineScope.process(builder: ProcessFunc<RESULT>) = processInNew
     coroutineContext[Job], builder
 )
 
+@Suppress("unused")
 fun CoroutineScope.work(builder: WorkFunc) = process(builder.toProcessFunc())
 fun <RESULT> CoroutineScope.promise(job: PromiseJob<RESULT>) = process { promise { job() } }
 

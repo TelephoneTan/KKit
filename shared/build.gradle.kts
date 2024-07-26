@@ -1,7 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -12,20 +10,6 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser {
-            commonWebpackConfig {
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(project.projectDir.path)
-                    }
-                }
-            }
-        }
-    }
-
     js(IR) {
         browser {}
         nodejs {}
@@ -64,6 +48,8 @@ kotlin {
                 implementation(libs.cryptography.core)
                 api(libs.kotlinx.serialization.json)
                 api(libs.kotlinx.coroutines.core)
+                api(libs.ktor.client.core)
+                implementation(libs.ksoup)
             }
             buildConfig {
                 useKotlinOutput { internalVisibility = false }
@@ -89,17 +75,23 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
-        androidMain.get().apply {
+        val localClient by creating {
+            dependsOn(commonMain.get())
             dependencies {
-                api(libs.ktor.client.core)
-                api(libs.ktor.client.cio)
+                api(libs.compose.webview.multiplatform)
+            }
+        }
+        androidMain.get().apply {
+            dependsOn(localClient)
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
             }
         }
         jvmMain.get().apply {
+            dependsOn(localClient)
             dependencies {
                 implementation(libs.cryptography.provider.jdk)
-                api(libs.ktor.client.core)
-                api(libs.ktor.client.cio)
+                implementation(libs.ktor.client.okhttp)
             }
         }
         jvmTest.get().apply {
@@ -108,15 +100,14 @@ kotlin {
             }
         }
         iosMain.get().apply {
+            dependsOn(localClient)
             dependencies {
-                api(libs.ktor.client.core)
-                api(libs.ktor.client.cio)
+                implementation(libs.ktor.client.darwin)
             }
         }
         jsMain.get().apply {
             dependencies {
-                api(libs.ktor.client.core)
-                api(libs.ktor.client.js)
+                implementation(libs.ktor.client.js)
             }
         }
     }

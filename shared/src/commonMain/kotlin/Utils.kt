@@ -1,3 +1,4 @@
+import io.ktor.utils.io.charsets.Charset
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -8,6 +9,7 @@ import kotlinx.serialization.json.Json
 
 fun String?.nonEmptyOrNull() = this?.takeIf { it.isNotEmpty() }
 
+@Suppress("unused")
 val json = Json {
     encodeDefaults = true
     explicitNulls = true
@@ -38,3 +40,5 @@ fun Mutex.synchronizedAsync(
 fun Mutex.synchronizedAsync(
     block: () -> Unit,
 ) = synchronizedAsync(before = {}, block = block, after = {})
+
+expect fun ByteArray.toString(charset: Charset): String

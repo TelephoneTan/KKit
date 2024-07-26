@@ -13,17 +13,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import http.HTTPMethod
+import http.HTTPRequest
 import kkit.composeapp.generated.resources.Res
 import kkit.composeapp.generated.resources.compose_multiplatform
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.coroutines.coroutineContext
-import kotlin.time.Duration.Companion.milliseconds
+import promise.process
 
 @Composable
 @Preview
@@ -36,12 +32,23 @@ fun App() {
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }
+                var response by remember { mutableStateOf("http response") }
+                LaunchedEffect(true) {
+                    process {
+                        HTTPRequest(
+                            method = HTTPMethod.GET,
+                            url = "https://tencent.com"
+                        ).copy().prepare().string()
+                    }.await().result.use {
+                        response = it
+                    }
+                }
                 Column(
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+                    Text("Compose: $greeting\n$response")
                 }
             }
         }
