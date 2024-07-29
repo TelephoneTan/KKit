@@ -39,7 +39,7 @@ fun App() {
                             method = HTTPMethod.GET,
                             url = "https://tencent.com"
                         ).copy().prepare().string()
-                    }.await().result.use {
+                    }.await().result.commit {
                         response = it
                     }
                 }
