@@ -49,19 +49,30 @@ kotlin {
                 api(libs.kotlinx.serialization.json)
                 api(libs.kotlinx.coroutines.core)
                 api(libs.ktor.client.core)
+                api(libs.ktor.client.websockets)
+                api(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.ksoup)
             }
             buildConfig {
                 useKotlinOutput { internalVisibility = false }
+                //
+                val webSocketServerScheme: String by rootProject.extra
+                buildConfigField<String>("WEB_SOCKET_SERVER_SCHEME", webSocketServerScheme)
+                //
+                val webSocketServerHost: String by rootProject.extra
+                buildConfigField<String>("WEB_SOCKET_SERVER_HOST", webSocketServerHost)
+                //
+                val webSocketServerPort: Int by rootProject.extra
+                buildConfigField<Int>("WEB_SOCKET_SERVER_PORT", webSocketServerPort)
+                //
+                val serverScheme: String by rootProject.extra
+                buildConfigField<String>("SERVER_SCHEME", serverScheme)
                 //
                 val serverHost: String by rootProject.extra
                 buildConfigField<String>("SERVER_HOST", serverHost)
                 //
                 val serverPort: Int by rootProject.extra
                 buildConfigField<Int>("SERVER_PORT", serverPort)
-                //
-                val serverHTTPBase: String by rootProject.extra
-                buildConfigField<String>("SERVER_HTTP_BASE", serverHTTPBase)
                 //
                 val cdnOrigin: String by rootProject.extra
                 buildConfigField<String>("CDN_ORIGIN", cdnOrigin)

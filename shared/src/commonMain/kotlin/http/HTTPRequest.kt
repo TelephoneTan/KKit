@@ -1,11 +1,13 @@
 package http
 
+import WEBSOCKET_PING_INTERVAL_SECONDS
 import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Document
 import io.ktor.client.call.body
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.cookies.HttpCookies
 import io.ktor.client.plugins.timeout
+import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.request
@@ -23,8 +25,10 @@ import io.ktor.http.contentType
 import io.ktor.http.headers
 import io.ktor.http.parameters
 import io.ktor.http.withCharsetIfNeeded
+import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 import io.ktor.utils.io.ByteReadChannel
 import io.ktor.utils.io.charsets.Charsets
+import kotlinx.serialization.json.Json
 import promise.PromiseScope
 import promise.task.TaskOnce
 import toString
@@ -32,20 +36,24 @@ import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
-private val httpClientCommon = httpClientBase.config {
+val httpClient = httpClientBase.config {
     install(HttpCookies) {
         httpCookieManager?.also {
             storage = it
         }
     }
     install(HttpTimeout)
+    install(WebSockets) {
+        pingInterval = WEBSOCKET_PING_INTERVAL_SECONDS * 1000L
+        contentConverter = KotlinxWebsocketSerializationConverter(Json)
+    }
 }
 
-private val httpClientFollow = httpClientCommon.config {
+private val httpClientFollow = httpClient.config {
     followRedirects = true
 }
 
-private val httpClientNoFollow = httpClientCommon.config {
+private val httpClientNoFollow = httpClient.config {
     followRedirects = false
 }
 
