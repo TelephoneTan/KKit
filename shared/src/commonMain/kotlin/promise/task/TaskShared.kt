@@ -35,7 +35,7 @@ class TaskShared<RESULT>(
         }
     }
 
-    fun perform(scope: PromiseScope, job: TaskSharedJob<RESULT>?): Promise<RESULT> {
+    fun perform(scope: PromiseScope, job: TaskSharedJob<RESULT>? = null): Promise<RESULT> {
         return scope.promise {
             rsp(TaskSharedReq(job = job).let {
                 reqChan.send(it)

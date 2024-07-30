@@ -61,33 +61,48 @@ fun App() {
                 }
                 val messageList = remember { mutableStateListOf<Message>() }
                 val listState = rememberLazyListState()
+                var restored by remember { mutableStateOf(false) }
                 LaunchedEffect(true) {
-                    httpClient.webSocket(
-                        "${URLBases.WEB_SOCKET_SERVER}/${Paths.MESSENGER}"
-                    ) {
-                        launch {
-                            var id = 0
-                            while (true) {
-                                Clock.System.now().toLocalDateTime(
-                                    TimeZone.currentSystemDefault()
-                                ).also {
-                                    sendSerialized(
-                                        Message(
-                                            id = (++id).toString(),
-                                            user = "turing",
-                                            message = "现在是 $it",
-                                            time = it,
+                    dao.messageDAO().getAll(false).map {
+                        it.value.fromJSON<Message>()
+                    }.commit {
+                        messageList.addAll(0, it)
+                        listState.requestScrollToItem(0)
+                        restored = true
+                    }
+                }
+                if (restored) {
+                    LaunchedEffect(true) {
+                        httpClient.webSocket(
+                            "${URLBases.WEB_SOCKET_SERVER}/${Paths.MESSENGER}"
+                        ) {
+                            launch {
+                                val ts = Clock.System.now().toEpochMilliseconds()
+                                var id = 0
+                                while (true) {
+                                    Clock.System.now().toLocalDateTime(
+                                        TimeZone.currentSystemDefault()
+                                    ).also {
+                                        sendSerialized(
+                                            Message(
+                                                id = "$ts-${++id}",
+                                                user = "turing",
+                                                message = "现在是 $it",
+                                                time = it,
+                                            )
                                         )
-                                    )
+                                    }
+                                    delay(1.seconds)
                                 }
-                                delay(1.seconds)
                             }
-                        }
-                        for (frame in incoming) {
-                            if (frame is Frame.Text) {
-                                converter!!.deserialize<Message>(frame).commit {
-                                    messageList.add(0, it)
-                                    listState.requestScrollToItem(0)
+                            for (frame in incoming) {
+                                if (frame is Frame.Text) {
+                                    converter!!.deserialize<Message>(frame).also {
+                                        dao.messageDAO().set(it.id, it.toJSON())
+                                    }.commit {
+                                        messageList.add(0, it)
+                                        listState.requestScrollToItem(0)
+                                    }
                                 }
                             }
                         }

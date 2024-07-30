@@ -5,6 +5,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 fun String?.nonEmptyOrNull() = this?.takeIf { it.isNotEmpty() }
@@ -42,3 +43,9 @@ fun Mutex.synchronizedAsync(
 ) = synchronizedAsync(before = {}, block = block, after = {})
 
 expect fun ByteArray.toString(charset: Charset): String
+
+inline fun <reified T> String.fromJSON(): T =
+    json.decodeFromString(this)
+
+inline fun <reified T> T.toJSON(): String =
+    json.encodeToString(this)

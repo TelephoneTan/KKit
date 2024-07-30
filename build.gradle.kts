@@ -11,4 +11,6 @@ plugins {
     alias(libs.plugins.buildConfig) apply false
     alias(libs.plugins.swiftKlib) apply false
     alias(libs.plugins.ktor) apply false
+    alias(libs.plugins.devToolsKSP) apply false
+    alias(libs.plugins.androidxRoom) apply false
 }

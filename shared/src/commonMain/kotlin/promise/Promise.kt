@@ -555,7 +555,7 @@ class Promise<RESULT> private constructor(
     }
 }
 
-private fun Job.toPromiseScope(): PromiseScope = run {
+fun Job.toPromiseScope(): PromiseScope = run {
     with(object : PromiseCancelledBroadcast {
         override val isActive: Boolean
             get() = this@run.isActive
@@ -578,6 +578,8 @@ private fun Job.toPromiseScope(): PromiseScope = run {
         }
     }
 }
+
+fun CoroutineContext.toPromiseScope(): PromiseScope = this[Job]!!.toPromiseScope()
 
 interface Work {
     fun cancel()

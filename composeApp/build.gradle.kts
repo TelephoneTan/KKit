@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.devToolsKSP)
+    alias(libs.plugins.androidxRoom)
 }
 
 kotlin {
@@ -35,6 +37,8 @@ kotlin {
             isStatic = true
         }
     }
+
+    applyDefaultHierarchyTemplate()
     
     sourceSets {
         commonMain.dependencies {
@@ -46,19 +50,41 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
         }
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
+        val localClient by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.room.runtime)
+                implementation(libs.room.common)
+                implementation(libs.sqlite)
+                implementation(libs.sqlite.bundled)
+            }
+        }
+        androidMain.get().apply {
+            dependsOn(localClient)
+            dependencies {
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
+            }
         }
         val desktopMain by getting {
+            dependsOn(localClient)
             dependencies {
                 implementation(compose.desktop.currentOs)
                 runtimeOnly(libs.kotlinx.coroutines.swing)
             }
         }
-        iosMain.dependencies {
+        iosMain.get().apply {
+            dependsOn(localClient)
         }
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspDesktop", libs.room.compiler)
 }
 
 android {
@@ -95,6 +121,9 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 

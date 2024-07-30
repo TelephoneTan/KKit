@@ -50,7 +50,7 @@ class TaskOnce<RESULT>(
         }
     }
 
-    fun perform(scope: PromiseScope, job: TaskOnceJob<RESULT>?): Promise<RESULT> {
+    fun perform(scope: PromiseScope, job: TaskOnceJob<RESULT>? = null): Promise<RESULT> {
         return scope.promise {
             rsp(TaskOnceReq(job = job).let {
                 reqChan.send(it)
